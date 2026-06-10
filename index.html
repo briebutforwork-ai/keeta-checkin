@@ -163,7 +163,7 @@ function rAct(){
   var aa=document.getElementById('aa');
   if(!inR){aa.innerHTML='<div class="done" style="border-color:#c8c08a;color:#a09a60;">Check-in not available today</div>';return;}
   if(done){aa.innerHTML='<div class="done">&#x2713; Checked in today!</div>';return;}
-  aa.innerHTML='<button class="btn" id="cb" onclick="doCI()">Check In Now</button>';
+  aa.innerHTML='<button class="btn" id="cb" onclick="doCI()">Stamp Now</button>';
 }
 function setSt(msg,t){var el=document.getElementById('sm');el.textContent=msg||' ';el.className='sm'+(t?' '+t:'');}
 function hav(a,b,c,d){
@@ -175,17 +175,17 @@ function doCI(){
   var btn=document.getElementById('cb');
   if(!btn||btn.disabled)return;
   btn.disabled=true;btn.textContent='Getting location...';setSt('');
-  if(!navigator.geolocation){setSt('Location not supported','err');btn.disabled=false;btn.textContent='Check In Now';return;}
+  if(!navigator.geolocation){setSt('Location not supported','err');btn.disabled=false;btn.textContent='Stamp Now';return;}
   navigator.geolocation.getCurrentPosition(
     function(p){
       var dist=hav(p.coords.latitude,p.coords.longitude,VLT,VLN);
       if(dist<=RM){sv(tk(TODAY.y,TODAY.m,TODAY.d));setSt('');rCal();rAct();}
-      else{setSt("You're "+Math.round(dist)+"m away — must be within "+RM+"m",'err');btn.disabled=false;btn.textContent='Check In Now';}
+      else{setSt("You're "+Math.round(dist)+"m away — must be within "+RM+"m",'err');btn.disabled=false;btn.textContent='Stamp Now';}
     },
     function(err){
       var msgs={1:'Please enable location access and try again',2:'Weak signal — please try again'};
       setSt(msgs[err.code]||'Location failed — please try again','err');
-      btn.disabled=false;btn.textContent='Check In Now';
+      btn.disabled=false;btn.textContent='Stamp Now';
     },
     {enableHighAccuracy:true,timeout:12000}
   );
